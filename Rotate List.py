@@ -3,28 +3,26 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-
 class Solution:
     def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         if not head:
             return head
-        
-        length, tail = 1, head
-
-        # Find the length of the linked list and locate the tail node
+        #get length
+        length,tail=1 , head
         while tail.next:
-            tail = tail.next
-            length += 1
+            tail=tail.next
+            length+=1
 
-        # Calculate the effective number of rotations since if k>length no need to go through all that we can just use k % length steps
-        k = k % length
+        #making k reducable by dividing it to lenght this works because if we have lenght of 5 and k =6 the 5 shift will make it comebac to orignal position and we shift 1 time.
+        k= k % length
+        if k==0:
+            return head
         
-        curr = head
-        # Find the new head node after rotation
-        for i in range(length - k - 1):
-            curr = curr.next
-        
-        newHead = curr.next
-        curr.next = None
-        tail.next = head
+        #move the pivote and rotate
+        cur=head
+        for i in range(length-k-1):
+            cur=cur.next
+        newHead=cur.next
+        cur.next=None
+        tail.next=head
         return newHead
